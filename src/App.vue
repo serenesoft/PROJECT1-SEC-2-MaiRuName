@@ -1,131 +1,96 @@
 <script>
 export default {
+  name: 'Calculator',
+  props: {
+    msg: String
+  },
   data() {
     return {
-      previous: null,
-      current: '',
-      operator:null,
-      operatorClicked: false,
+      calculatorValue: '',
+      calculatorElements: ['C', 'X', '÷', '-', 7, 8, 9, '+', 4, 5, 6, '%', 1, 2, 3, '=', 0, '.'],
+      operator: null,
+      previousCalculatorValue: '',
     }
   },
-  methods:{
-    clear(){
-      this.current = ''
-    },
-    sign(){
-      this.current = this.current.charAt(0) === '-' ?  this.current.slice(1): `-${this.current}`
-    },
-    setPrevious(){
-      this.previous=this.current 
-      this.operatorClicked = true
-    },
-    percent(){
-      this.current = `${parseFloat(this.current) / 100}`
-    },
-    divide(){
-      this.operator = (a,b) => a/b
-      this.setPrevious()
-    }
-    ,
-    multiply(){
-      this.operator = (a,b) => a*b
-      this.setPrevious()
-    },
-    minus(){
-      this.operator = (a,b) => a-b
-      this.setPrevious()
-    },
-    plus(){
-      this.operator = (a,b) => a+b
-      this.setPrevious()
-    },
-    equal(){
-      this.current = `${this.operator(parseFloat(this.previous),parseFloat(this.current))}`
-      this.previous = null
-    },
-    append(number){
-      if(this.operatorClicked){
-        this.current = '';
-        this.operatorClicked = false;
+
+  methods: {
+    action(n) {
+
+      // Append Value
+      if (!isNaN(n) || n === '.') {
+        this.calculatorValue += n + '';
       }
-      this.current = `${this.current}${number}`
-    },
-    dot(){
-      if(this.current.indexOf('.') === -1)
-      this.append('.')
+
+      // Clear value
+      if (n === 'C') {
+        this.calculatorValue = '';
+      }
+
+      // Percentage
+      if (n === '%') {
+        this.calculatorValue = this.calculatorValue / 100
+      }
+
+
+      if (['X', '÷', '-', '+'].includes(n)) {
+        if (n === '÷') {
+          this.operator = '/'
+        }
+        else {
+          this.operator = n
+        }
+        this.previousCalculatorValue = this.calculatorValue
+        this.calculatorValue = '';
+      }
+
+      if (n === '=') {
+        this.calculatorValue = eval(
+          this.previousCalculatorValue + this.operator + this.calculatorValue
+        );
+
+        this.previousCalculatorValue = ''
+        this.operator = null;
+      }
     }
   }
 }
 </script>
 
 <template>
-  <div class="calculator">
-    <div class="display">{{current || '0'}}</div>
-    <div @click="clear" class="btn">C</div>
-    <div @click="sign" class="btn">+/-</div>
-    <div @click="percent" class="btn">%</div>
-    <div @click="divide" class="btn , operator">÷</div>
-    <div @click="append('7')" class="btn">7</div>
-    <div @click="append('8')" class="btn">8</div>
-    <div @click="append('9')" class="btn">9</div>
-    <div @click="multiply" class="btn , operator">x</div>
-    <div @click="append('4')" class="btn">4</div>
-    <div @click="append('5')" class="btn">5</div>
-    <div @click="append('6')" class="btn">6</div>
-    <div @click="minus" class="btn , operator">-</div>
-    <div @click="append('1')" class="btn">1</div>
-    <div @click="append('2')" class="btn">2</div>
-    <div @click="append('3')" class="btn">3</div>
-    <div @click="plus" class="btn , operator">+</div>
-    <div @click="append('0')" class="btn , zero">0</div>
-    <div @click="dot" class="btn">.</div>
-    <div @click="equal" class="btn , operator">=</div>
+  <div class="h-screen bg-vue-dark py-[50px]">
+
+    <div class="w-full p-3 max-w-[400px] mx-auto bg-[#234] rounded">
+
+      <!-- Calculator Result -->
+      <div class="w-full rounded my-1 p-3 text-right font-weight-bold text-white bg-vue-dark">
+        {{ calculatorValue || 0}}
+      </div>
+
+      <!-- Calculator buttons -->
+      <div class="grid grid-cols-4 gap-[0.0005rem]">
+        <div v-for="n in calculatorElements" :key="n">
+          <div class="rounded text-white text-center m-1 py-4 bg-vue-dark hover-class"
+            :class="{ 'bg-vue-green': ['C', 'X', '÷', '-', '+', '%', '='].includes(n) }" @click="action(n)">
+            {{ n }}
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.calculator {
-  margin: auto;
-  width: 500px;
-  padding: 50px;
-  border-radius: 25px;
-  background-color: #3D5875;
-  font-size: 40px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(50px, auto);
-
+.bg-vue-dark {
+  background: #31475e;
 }
 
-.display {
-  grid-column: 1/5;
-  background-color: #333;
-  border-radius: 10px;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.zero {
-  grid-column: 1/3;
-}
-
-.btn {
-  background-color: #f2f2f2;
-  border: 1px solid #999;
-  padding: 20px;
-  margin: 5px;
-  border-radius: 10px;
-  text-align: center;
-}
-.btn:hover{
+.hover-class:hover {
   cursor: pointer;
   background: #3D5875;
 }
 
-.operator {
-  background-color: orange;
-  color: white;
+.bg-vue-green {
+  background: #3fb984;
 }
 </style>
