@@ -7,7 +7,8 @@ export default {
       operator: null,
       currentOperator: null,
       operatorClicked: false,
-      equation: ''
+      equation: '', // เอาไว้เก็บสมการ(ที่ขึ้นตัวๆเล็กด้านบนอะ)
+      clickedEqual: false // ถ้ากด = แล้วมันจะเปลี่ยนเป็น true | พอเป็น true แล้วจะไปดักไม่ให้กด = ซ้ำ (บรรทัด89) | แล้วไปเซ็ตค่ากลับเป็น false เวลากดปุ่มตัวเลข (บรรทัด7)
     }
   },
   methods: {
@@ -23,6 +24,7 @@ export default {
       this.current = `${this.current.slice(0, -1)}`
     },
     append(number) {
+      this.clickedEqual = false 
       if(this.operatorClicked) {
         this.current = ''
         this.operatorClicked = false
@@ -41,36 +43,63 @@ export default {
       }
     },
     divide(){
-      this.operator = (a, b) => a / b
-      this.currentOperator = '÷'
-      this.setEquation()
-      this.setPreviousNumber()
+      if(this.current === ''){ // ดักไม่ให้กดเครื่องหมายเป็นตัวแรก
+        return ;
+      }else {
+        this.operator = (a, b) => a / b
+        this.currentOperator = '÷'
+        this.setEquation()
+        this.setPreviousNumber()
+      }
     },
     multiply() {
-      this.operator = (a, b) => a * b
-      this.currentOperator = 'x'
-      this.setEquation()
-      this.setPreviousNumber()
+      if(this.current === ''){
+        return ;
+      }else{
+        this.operator = (a, b) => a * b
+        this.currentOperator = 'x'
+        this.setEquation()
+        this.setPreviousNumber()
+      }
     },
     minus() {
-      this.operator = (a, b) => a - b
-      this.currentOperator = '-'
-      this.setEquation()
-      this.setPreviousNumber()
+      if(this.current === ''){
+        return ;
+      }else {
+        this.operator = (a, b) => a - b
+        this.currentOperator = '-'
+        this.setEquation()
+        this.setPreviousNumber()
+      }
     },
     plus() {
-      this.operator = (a, b) => a + b
-      this.currentOperator = '+'
-      this.setEquation()
-      this.setPreviousNumber()
+      if(this.current === ''){
+        return ;
+      }else {
+        this.operator = (a, b) => a + b
+        this.currentOperator = '+'
+        this.setEquation()
+        this.setPreviousNumber()
+      }
     },
     setEquation() {
       this.equation = `${this.current} ${this.currentOperator}`
     },
     equal() {
-      this.equation = `${this.previousNumber} ${this.currentOperator} ${this.current} = `
-      this.current = this.operator(parseFloat(this.previousNumber), parseFloat(this.current))
-      this.previousNumber = null
+      if(this.clickedEqual){
+        return ;
+      }else{
+        this.equation = `${this.previousNumber} ${this.currentOperator} ${this.current} = `
+        this.current = this.operator(parseFloat(this.previousNumber), parseFloat(this.current))
+        this.previousNumber = null
+        this.clickedEqual = true
+      }
+      
+    },
+    dak() {
+      if(this.current === ''){
+        return ;
+      }
     }
   }
 }
@@ -78,7 +107,7 @@ export default {
  
 <template>
   
-<div class="bg-gray-400 flex items-center justify-center h-screen">
+<div class="bg-gray-400 flex items-center justify-center h-screen max-sm">
   <div class="bg-slate-50 p-10 rounded-lg ">
     <h1 class="text-5xl text-center pb-7 font-semibold">Calculator</h1>
     <div class="calculator text-3xl w-96 p-8">
@@ -133,15 +162,17 @@ export default {
 }
 .btn:hover {
   transition-duration: 0.4s;
-  background-color:  #94a3b8;
-  color: white;
+  background-color:  #e2e8f0;
+}
+.btn:active {
+  transform: scale(1.2, 1.2);
 }
 .operator {
   background-color: orange;
   color: white;
 }
 .operator:hover {
-  background-color: rgb(250, 200, 109);
+  background-color: #fdba74;
   color: black;
 }
 </style>
