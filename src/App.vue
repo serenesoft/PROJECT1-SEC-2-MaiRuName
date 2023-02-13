@@ -3,129 +3,177 @@ export default {
   data() {
     return {
       previous: null,
-      current: '',
-      operator:null,
-      operatorClicked: false,
+      displayInput: '',
+      displayValue: '',
+      operator: null,
+      operatorClicked: false
     }
   },
-  methods:{
-    clear(){
-      this.current = ''
+  methods: {
+    clear() {
+      this.displayInput = '';
+      this.displayValue = '';
     },
-    sign(){
-      this.current = this.current.charAt(0) === '-' ?  this.current.slice(1): `-${this.current}`
+    sign() {
+      this.displayInput = this.displayInput.charAt(0) === '-' ? this.displayInput.slice(1) : `-${this.displayInput}`;
     },
-    setPrevious(){
-      this.previous=this.current 
-      this.operatorClicked = true
+    percent() {
+      this.displayValue = `${parseFloat(this.displayInput)/100}`
     },
-    percent(){
-      this.current = `${parseFloat(this.current) / 100}`
-    },
-    divide(){
-      this.operator = (a,b) => a/b
-      this.setPrevious()
-    }
-    ,
-    multiply(){
-      this.operator = (a,b) => a*b
-      this.setPrevious()
-    },
-    minus(){
-      this.operator = (a,b) => a-b
-      this.setPrevious()
-    },
-    plus(){
-      this.operator = (a,b) => a+b
-      this.setPrevious()
-    },
-    equal(){
-      this.current = `${this.operator(parseFloat(this.previous),parseFloat(this.current))}`
-      this.previous = null
-    },
-    append(number){
-      if(this.operatorClicked){
-        this.current = '';
-        this.operatorClicked = false;
+    // append(number) {
+    //   if (this.operatorClicked) {
+    //     this.displayValue = '';
+    //     this.operatorClicked = false;
+    //   }
+    //   this.displayValue = `${this.displayValue}${number}`;
+    // },
+    append(key){
+      if(!this.operatorClicked){
+        this.displayInput += key;
       }
-      this.current = `${this.current}${number}`
+      else{
+        this.operatorClicked = false
+        this.displayInput = ''
+        this.displayValue=''
+        this.displayInput += key
+      }
     },
-    dot(){
-      if(this.current.indexOf('.') === -1)
-      this.append('.')
+    dot() {
+      if (this.displayInput.indexOf('.') === -1) {
+        this.append('.');
+      }
+    },
+    setPrevious() {
+      this.previous = this.displayInput;
+      this.operatorClicked = true;
+    },
+    divide() {
+      this.operator = (a, b) => a/b;
+      this.setPrevious();
+
+    },
+    times() {
+      this.operator = (a, b) => a*b;
+      this.setPrevious();
+    },
+    minus() {
+      this.operator = (a, b) => a-b;
+      this.setPrevious();
+    },
+    plus() {
+      this.operator = (a, b) => a+b;
+      this.setPrevious();
+    },
+    equal() {
+      // this.displayInput = `${this.operator(parseFloat(this.displayInput), parseFloat(this.previous))}`;
+      if(this.displayInput.includes('%')){
+        const arr = this.displayInput.split('')
+        const newArr = []
+        for(let i=0;i<arr.length;i++){
+          if(arr[i]!='%'){
+            newArr.push(arr[i])
+          }
+          else{
+            newArr.push('/100')
+          }
+        }
+        this.displayInput = newArr.join('')
+        console.log(newArr)
+      }
+      console.log(this.displayInput)
+      this.displayValue = eval(this.displayInput)
+      this.operatorClicked = true
     }
-  }
+    }
 }
 </script>
 
 <template>
-  <div class="calculator">
-    <div class="display">{{current || '0'}}</div>
-    <div @click="clear" class="btn">C</div>
-    <div @click="sign" class="btn">+/-</div>
-    <div @click="percent" class="btn">%</div>
-    <div @click="divide" class="btn , operator">÷</div>
-    <div @click="append('7')" class="btn">7</div>
-    <div @click="append('8')" class="btn">8</div>
-    <div @click="append('9')" class="btn">9</div>
-    <div @click="multiply" class="btn , operator">x</div>
-    <div @click="append('4')" class="btn">4</div>
-    <div @click="append('5')" class="btn">5</div>
-    <div @click="append('6')" class="btn">6</div>
-    <div @click="minus" class="btn , operator">-</div>
-    <div @click="append('1')" class="btn">1</div>
-    <div @click="append('2')" class="btn">2</div>
-    <div @click="append('3')" class="btn">3</div>
-    <div @click="plus" class="btn , operator">+</div>
-    <div @click="append('0')" class="btn , zero">0</div>
-    <div @click="dot" class="btn">.</div>
-    <div @click="equal" class="btn , operator">=</div>
+  <div class="app">
+    <div class="calculator">
+      <div class="display">
+        <div class="input">{{ displayInput }}</div>
+        <div class="output">{{ displayValue || '0' }}</div>
+      </div>
+      <button @click="clear" class="buttons action">AC</button>
+      <button @click="sign" class="buttons action">+/-</button>
+      <button @click="percent" class="buttons action">%</button>
+      <button @click="append('/')" class="buttons operator">÷</button>
+      <button @click="append('7')" class="buttons">7</button>
+      <button @click="append('8')" class="buttons">8</button>
+      <button @click="append('9')" class="buttons">9</button>
+      <button @click="append('*')" class="buttons operator">x</button>
+      <button @click="append('4')" class="buttons">4</button>
+      <button @click="append('5')" class="buttons">5</button>
+      <button @click="append('6')" class="buttons">6</button>
+      <button @click="append('-')" class="buttons operator">-</button>
+      <button @click="append('1')" class="buttons">1</button>
+      <button @click="append('2')" class="buttons">2</button>
+      <button @click="append('3')" class="buttons">3</button>
+      <button @click="append('+')" class="buttons operator">+</button>
+      <button @click="append('0')" class="buttons zero">0</button>
+      <button @click="append('.')" class="buttons">.</button>
+      <button @click="equal" class="buttons operator">=</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.app {
+  background-color: #1a0e25;
+  width: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+}
 .calculator {
-  margin: auto;
-  width: 500px;
-  padding: 50px;
-  border-radius: 25px;
-  background-color: #3D5875;
-  font-size: 40px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0 auto;
+  width: 600px;
+  font-size: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(50px, auto);
-
+  padding-top: 170px;
+  padding-bottom: 25%;
 }
-
 .display {
   grid-column: 1/5;
-  background-color: #333;
-  border-radius: 10px;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  margin-bottom: 10px;
+  //align-items: flex-end;
 }
-
+.input {
+  background-color: #14081f;
+  height: 20px;
+  color: white;
+  text-align: right;
+  padding-top: 5px;
+  border-radius: 0px;
+  font-size: 14px;
+  //padding-right: 35px;
+}
+.output {
+  background-color: #14081f;
+  color: white;
+  text-align: right;
+  font-size: 40px;
+  font-weight: bold;
+  padding-right: 35px;
+}
+.operators {
+  color: #99de1e;
+}
 .zero {
   grid-column: 1/3;
 }
-
-.btn {
-  background-color: #f2f2f2;
-  border: 1px solid #999;
-  padding: 20px;
-  margin: 5px;
-  border-radius: 10px;
-  text-align: center;
+.buttons {
+  background-color: #eee;
+  border: 1px solid #333;
 }
-.btn:hover{
-  cursor: pointer;
-  background: #3D5875;
-}
-
 .operator {
-  background-color: orange;
+  background-color: #99de1e;
   color: white;
+}
+.action {
+  background-color: #7554a3;
+  color: #f2f2f2;
 }
 </style>
