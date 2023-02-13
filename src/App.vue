@@ -2,15 +2,17 @@
 export default{
   data(){
     return{
+      current: '0',
+      equation:'',
+      operaToEquation: null,
       previous:null,
-      current: '100',
       operator: null,
       operatorClicked:false,
     }
   },
   methods:{
     clear(){
-      this.current = ''
+      this.current = '0'
     },
     sign(){
       this.current = this.current.charAt(0) === '-'?this.current.slice(1): `-${this.current}`
@@ -20,7 +22,7 @@ export default{
     },
     append(number){ // แสดง ตัวเลข
       if(this.operatorClicked){
-        this.current=''
+        this.current='0'
         this.operatorClicked=false
       }
       this.current = `${this.current}${number}`
@@ -34,33 +36,48 @@ export default{
       this.previous = this.current
       this.operatorClicked=true
     },
+    setEquation(){
+      this.equation = `${this.current}${this.operaToEquation}`
+    },
+    // เครื่องหมาย -----------------------------------------------
     divide(){
       this.operator = (a,b) => a/b
       this.previous = this.current
       this.operatorClicked =true
+      this.operaToEquation = '÷'
+      this.setEquation()
       this.setPrevious()
     },
     multiply(){
       this.operator = (a,b) => a*b
       this.previous = this.current
       this.operatorClicked =true
+      this.operaToEquation = 'x'
+      this.setEquation()
       this.setPrevious()
     },
     minus(){
       this.operator = (a,b) => a-b
       this.previous = this.current
       this.operatorClicked =true
+      this.operaToEquation = '-'
+      this.setEquation()
       this.setPrevious()
     },
     plus(){
       this.operator = (a,b) => a+b
       this.previous = this.current
       this.operatorClicked =true
+      this.operaToEquation = '+'
+      this.setEquation()
       this.setPrevious()
     },
     equal(){
+      this.equation = `${this.previous}${this.operaToEquation}${this.current}=`
       this.current = `${this.operator(parseFloat(this.current),parseFloat(this.previous))}`
       this.previous = null
+      this.operaToEquation = '='
+      
     },
     
   }
@@ -69,7 +86,8 @@ export default{
  
 <template>
   <div class="calculator">
-    <div class="display text-center">{{ current || '0' }}</div>
+    <h1> {{ equation }}</h1>
+    <div class="display text-end"><span class='mr-3 text-white'>{{ parseInt(current).toLocaleString() || '' }}</span></div>
     <div @click="clear" class="btn">C</div>
     <div @click="sign" class='btn'>+/-</div>
     <div @click="percent" class="btn">%</div>
@@ -99,12 +117,14 @@ export default{
   font-size: 40px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(50px, auto);
+  grid-template-rows: repeat(6, 1fr);
+  user-select: none;
 }
 
 .display{
   grid-column: 1 /5;
   background-color: #333;
+  
 }
 .zero{
   grid-column: 1 / 3
@@ -118,5 +138,12 @@ export default{
 .operator{
   background-color: orange;
   color: white;
+}
+.btn:hover{
+  background-color: rgb(186, 235, 255);
+  color: black;
+}
+.btn:active{
+  transform: scale(1.1,1.1);
 }
 </style>
