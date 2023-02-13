@@ -55,9 +55,6 @@ export default {
       if(this.current.indexOf('.') === -1)
       this.append('.')
     },
-    history(){
-      this.history=''
-    }
   }
 }
 </script>
@@ -85,7 +82,6 @@ export default {
     <div @click="append('0')" class="btn , zero">0</div>
     <div @click="dot" class="btn">.</div>
     <div @click="equal" class="btn , operator">=</div>
-    <div @click="history" class="btn history">History</div>
   </div>
 </div>
 </template>
@@ -96,17 +92,17 @@ export default {
   width: 500px;
   padding: 30px;
   border-radius: 25px;
-  background-color: #3D5875;
+  background-color: #14091f;
   font-size: 40px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 10fr);
   grid-auto-rows: minmax(50px, auto);
 
 }
 
 .display {
   grid-column: 1/5;
-  background-color: #333;
+  background-color: #7554a3;
   border-radius: 10px;
   color: white;
   text-align: center;
@@ -119,24 +115,27 @@ export default {
 }
 
 .btn {
-  background-color: #f2f2f2;
-  border: 1px solid #999;
+  background-color: #381f50;
+  border: 0px solid #999;
   padding: 10px;
-  margin: 1px;
+  margin: 3px;
   border-radius: 10px;
   text-align: center;
-  color:#333;
+  color:white;
 }
 .btn:hover{
   cursor: pointer;
-  background: #3D5875;
+  background: #99de1e;
+  color: #14091f;
 }
 
 .operator {
-  background-color: orange;
-  color: white;
+  background-color: #99de1e;
+  color: #14091f;
 }
-.history{
-  grid-column: 1/5;
+.operator:hover{
+  cursor: pointer;
+  background: #984de7;
+  color: white;
 }
 </style>
