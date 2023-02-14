@@ -32,8 +32,8 @@ export default { // Test git
       this.current = `${this.current}${number}`
     },
     setPreviousNumber() {
-      this.previousNumber = this.current
-      this.operatorClicked = true
+      this.previousNumber = this.current // เปลี่ยนตัวเลขcurrent --> previous (ตัวเลขตัวแรก)  -->A<-- + B = X
+      this.operatorClicked = true // เมื่อกดเครื่องหมายจะเปลี่ยนเป็น true แล้วไปเข้าเงื่อนไขใน method append
     },
     dot() {
       if(this.current.includes('.') || this.current === ''){ // ดักไม่ให้กด'.'ซ้ำและกดตัวแรก
@@ -83,24 +83,18 @@ export default { // Test git
       }
     },
     setEquation() {
-      this.equation = `${this.current} ${this.currentOperator}`
+      this.equation = `${this.current} ${this.currentOperator}` // แสดงสมการหลังจากที่กดเครื่องหมาย Ex. '3 +'
     },
     equal() {
-      if(this.clickedEqual){
+      if(this.clickedEqual){ // ดักไม่ให้กด = ซ้ำ
         return ;
       }else{
-        this.equation = `${this.previousNumber} ${this.currentOperator} ${this.current} = `
+        this.equation = `${this.previousNumber} ${this.currentOperator} ${this.current} = ` // แสดงสมการหลังจากที่กด '=' Ex. '3 + 5 ='
         this.current = this.operator(parseFloat(this.previousNumber), parseFloat(this.current))
         this.previousNumber = null
         this.clickedEqual = true
       }
-      
     },
-    dak() {
-      if(this.current === ''){
-        return ;
-      }
-    }
   }
 }
 </script>
