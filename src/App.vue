@@ -108,15 +108,14 @@ function equal() {
   }
 }
 </script>
-
+ 
 <template>
   <div class="bg-gray-400 flex items-center justify-center h-screen max-sm">
     <div class="bg-slate-50 p-10 rounded-lg">
       <h1 class="text-5xl text-center pb-7 font-semibold">Calculator</h1>
       <div class="calculator text-3xl w-96 p-8">
         <div
-          class="display bg-slate-800 col-span-4 pl-2 rounded-lg mb-1 text-right pr-2 relative"
-        >
+          class="display bg-slate-800 col-span-4 pl-2 rounded-lg mb-1 text-right pr-2 relative">
           <div class="text-gray-200 text-2xl">
             {{ equation }}
           </div>
@@ -147,7 +146,7 @@ function equal() {
     </div>
   </div>
 </template>
-
+ 
 <style scoped>
 .calculator {
   display: grid;
@@ -168,6 +167,7 @@ function equal() {
 .btn:hover {
   transition-duration: 0.4s;
   background-color: #e2e8f0;
+
 }
 .btn:active {
   transform: scale(1.2, 1.2);
