@@ -5,19 +5,18 @@ let previousNumber = ref('');
 let operator = ref(null);
 let currentOperator = ref('');
 let operatorClicked = ref(false); 
-let equation = ref(''); // เอาไว้เก็บสมการ(ที่ขึ้นตัวๆเล็กด้านบนอะ)
+let equation = ref(''); // เอาไว้เก็บสมการ(ที่ขึ้นตัวๆเล็กด้านบน)
 let clickedEqual = ref(false) // ถ้ากด = แล้วมันจะเปลี่ยนเป็น true | พอเป็น true แล้วจะไปดักไม่ให้กด = ซ้ำ | แล้วไปเซ็ตค่ากลับเป็น false เวลากดปุ่มตัวเลขที่function append
 
 // History
 let histories = ref([])
 let result = ref('')
-
+// ปุ่มtoggle history
 let toggleHistory = ref(false)
 
 function clear() {
   current.value = '';
   equation.value = '';
-  result.value = '';
 }
 
 function sign() {
@@ -43,8 +42,9 @@ function setPreviousNumber() {
 }
 
 function setResultAfterClickOperan() {
-  result.value = `${current.value} ${currentOperator}`;
+  result.value = `${current.value} ${currentOperator}`; // [History] ตั้งค่าสมการที่จะเก็บไว้ใน history เก็บไว้ในตัวแปล result Ex.'3 +'
 }
+
 function dot() {
   if (current.value.includes(".") || current.value === "") { // ดักไม่ให้กด'.'ซ้ำและกดตัวแรก
     return;
@@ -102,18 +102,18 @@ function plus() {
 }
 
 function setEquation() {
-  equation.value = `${current.value} ${currentOperator}`; // แสดงสมการหลังจากที่กดเครื่องหมาย Ex. '3 +'
+  equation.value = `${current.value} ${currentOperator}`; // [Equation] แสดงสมการหลังจากที่กดเครื่องหมาย Ex. '3 +'
 }
 
 function equal() {
   if (clickedEqual) { // ดักไม่ให้กด = ซ้ำ
     return;
   } else {
-    equation.value = `${previousNumber.value} ${currentOperator} ${current.value} = `; // แสดงสมการหลังจากที่กด '=' Ex. '3 + 5 ='
-    result.value = result.value + ' ' +current.value
+    equation.value = `${previousNumber.value} ${currentOperator} ${current.value} = `; // [Equation] แสดงสมการหลังจากที่กด '=' Ex. '3 + 5 ='
+    result.value = result.value + ' ' +current.value // [History] ก่อนจะคำนวณ เอาresultจากsetResultAfterClickOperan()มาใช้ต่อ จะได้ '3 + 5'
     current.value = operator(parseFloat(previousNumber.value), parseFloat(current.value));
-    result.value = result.value + ' = ' +current.value
-    histories.value.push(result.value)
+    result.value = result.value + ' = ' +current.value // [History] หลังจากคำนวณ เอาresultอันก่อนหน้านี้มาใช้ต่อ จะได้ '3 + 5 = 8'
+    histories.value.push(result.value) // [History] push result เข้าไปเก็บใน history
     previousNumber.value = null;
     clickedEqual = true;
   }
@@ -130,11 +130,11 @@ function clearHistory() {
     <div class="bg-slate-50 p-10 rounded-lg m-10">
       <h1 class="text-5xl text-center pb-7 font-semibold">Calculator</h1>
       <div class="calculator text-3xl w-96 p-8">
-        <div class="display bg-slate-800 col-span-4 pl-2 rounded-lg mb-1 text-right pr-2 relative text-clip overflow-hidden ">
+        <div class="display bg-slate-800 col-span-4 pl-2 rounded-lg mb-1 text-right pr-2 relative overflow-hidden ">
           <div class="text-gray-200 text-2xl">
             {{ equation }}
           </div>
-          <div class="text-white text-5xl font-bold absolute bottom-1 right-2 ">
+          <div class="currentDisplay text-white text-5xl font-bold absolute bottom-1 right-2 ">
             {{ current || 0 }}
           </div>
         </div>
@@ -165,8 +165,8 @@ function clearHistory() {
 
     <div v-show="toggleHistory" class="bg-slate-50 pt-8 px-10 ml-7 rounded-lg">
       <h1 class="text-5xl text-center pb-7 font-semibold">History</h1>
-      <div class="bg-gray-200 rounded-lg overflow-scroll w-96 h-96">
-        <ul class="text-lg pl-3  pt-2">
+      <div class="bg-gray-200 rounded-lg overflow-y-auto w-96 h-96">
+        <ul class="text-lg pl-3 pt-2">
             <li v-for="history in histories">{{ history }}</li>
         </ul>
       </div>
@@ -179,6 +179,7 @@ function clearHistory() {
 </template>
 
 <style scoped>
+
 .calculator {
   display: grid;
   grid-template-columns: repeat(4, 80px);
@@ -224,7 +225,7 @@ function clearHistory() {
 }
 .historyBtn:hover {
   transition-duration: 0.4s;
-  background-color: #e2e8f0;
+  background-color: #e5e7eb;
   color: black;
 }
 .historyBtn:active{
@@ -243,7 +244,7 @@ function clearHistory() {
 }
 .clearHistoryBtn:hover{
   transition-duration: 0.4s;
-  background-color: #e2e8f0;
+  background-color: #e5e7eb;
   color: red;
   border: 1px solid red;
 }
