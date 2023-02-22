@@ -112,10 +112,14 @@ function equal() {
     equation.value = `${previousNumber.value} ${currentOperator} ${current.value} = `; // [Equation] แสดงสมการหลังจากที่กด '=' Ex. '3 + 5 ='
     result.value = result.value + ' ' +current.value // [History] ก่อนจะคำนวณ เอาresultจากsetResultAfterClickOperan()มาใช้ต่อ จะได้ '3 + 5'
     current.value = operator(parseFloat(previousNumber.value), parseFloat(current.value));
+    if(!Number.isInteger(current.value)){ // ถ้าcurrent ไม่ใช่จำนวนเต็ม ให้แปลงเป็นFloat ก่อน แล้วค่อยtoFixed() ตำแหน่งทศนิยม
+      current.value = parseFloat(current.value).toFixed(5)
+    }
     result.value = result.value + ' = ' +current.value // [History] หลังจากคำนวณ เอาresultอันก่อนหน้านี้มาใช้ต่อ จะได้ '3 + 5 = 8'
     histories.value.push(result.value) // [History] push result เข้าไปเก็บใน history
     previousNumber.value = null;
     clickedEqual = true;
+    console.log(typeof(current)); 
   }
 }
 
@@ -126,11 +130,11 @@ function clearHistory() {
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-gray-400  items-center justify-center max-sm">
-    <div class="bg-slate-50 p-10 rounded-lg m-10">
-      <h1 class="text-5xl text-center pb-7 font-semibold">Calculator</h1>
-      <div class="calculator text-3xl w-96 p-8">
-        <div class="display bg-slate-800 col-span-4 pl-2 rounded-lg mb-1 text-right pr-2 relative overflow-hidden ">
+  <div class="flex min-h-screen bg-[#14081f]  items-center justify-center max-sm select-none">
+    <div class="bg-purple-900 p-10 rounded-lg m-10">
+      <h1 class="text-5xl text-center pb-7 font-semibold text-white">Calculator</h1>
+      <div class="calculator bg-[#14081f] text-3xl w-96 p-8">
+        <div class="display bg-[#301652] col-span-4 pl-2 rounded-lg mb-1 text-right pr-2 relative overflow-hidden ">
           <div class="text-gray-200 text-2xl">
             {{ equation }}
           </div>
@@ -158,19 +162,19 @@ function clearHistory() {
         <div @click="dot()" class="btn">.</div>
         <div @click="equal()" class="btn operator">=</div>
       </div>
-      <div @click="toggleHistory = !toggleHistory" class="historyBtn hover:ring-4 hover:ring-offset-2 ring-slate-800">
+      <div @click="toggleHistory = !toggleHistory" class="historyBtn hover:ring-4 hover:ring-offset-2 ring-[#14081f]">
         <h1>HISTORY</h1>
       </div>
     </div>
 
-    <div v-show="toggleHistory" class="bg-slate-50 pt-8 px-10 ml-7 rounded-lg">
-      <h1 class="text-5xl text-center pb-7 font-semibold">History</h1>
+    <div v-show="toggleHistory" class="bg-purple-900 pt-8 px-10 ml-7 rounded-lg">
+      <h1 class="text-5xl text-center pb-7 font-semibold text-white">History</h1>
       <div class="bg-gray-200 rounded-lg overflow-y-auto w-96 h-96">
         <ul class="text-lg pl-3 pt-2">
             <li v-for="history in histories">{{ history }}</li>
         </ul>
       </div>
-      <div class="clearHistoryBtn hover:ring-4 hover:ring-offset-2 ring-red-800">
+      <div class="clearHistoryBtn hover:ring-4 hover:ring-offset-2 ring-[#99de1e]">
         <h1 @click="clearHistory() ">Clear history</h1>
       </div>
     </div>
@@ -184,12 +188,12 @@ function clearHistory() {
   display: grid;
   grid-template-columns: repeat(4, 80px);
   grid-template-rows: repeat(6, 80px);
-  background-color: #e5e7eb;
   border-radius: 5%;
   user-select: none;
 }
 .btn {
-  background-color: #cbd5e1;
+  color: white;
+  background-color: #462870;
   border: 1px solid black;
   border-radius: 10px;
   text-align: center;
@@ -197,6 +201,7 @@ function clearHistory() {
   padding: 14px;
 }
 .btn:hover {
+  color: #341f50;
   transition-duration: 0.4s;
   background-color: #e2e8f0;
 }
@@ -204,15 +209,15 @@ function clearHistory() {
   transform: scale(1.2, 1.2);
 }
 .operator {
-  background-color: orange;
-  color: white;
+  background-color: #99de1e;
+  color: #341f50;
 }
 .operator:hover {
-  background-color: #fdba74;
-  color: black;
+  background-color: #e2e8f0;
+  color: #341f50;
 }
 .historyBtn {
-  background-color: #1e293b;
+  background-color: #14081f;
   border: 1px solid black;
   color: white;
   font-size: x-large;
@@ -225,16 +230,16 @@ function clearHistory() {
 }
 .historyBtn:hover {
   transition-duration: 0.4s;
-  background-color: #e5e7eb;
-  color: black;
+  background-color: #e2e8f0;
+  color: #14081f;
 }
 .historyBtn:active{
   transform: scale(1.1, 1.1);
 }
 .clearHistoryBtn{
-  background-color: red;
+  background-color: #99de1e;
   border: 1px solid black;
-  color: white;
+  color: #341f50;
   font-weight: bold;
   border-radius: 10px;
   text-align: center;
@@ -244,9 +249,9 @@ function clearHistory() {
 }
 .clearHistoryBtn:hover{
   transition-duration: 0.4s;
-  background-color: #e5e7eb;
-  color: red;
-  border: 1px solid red;
+  background-color: #e2e8f0;
+  color: #341f50;
+  border: 1px solid #99de1e;
 }
 .clearHistoryBtn:active{
   transform: scale(1.1, 1.1);
