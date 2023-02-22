@@ -20,17 +20,18 @@
 ## References
 - [Calculator structure](https://www.youtube.com/watch?v=m1_ih43p24s )
 - [History](https://www.youtube.com/watch?v=IM1RzqlX2JA)
-**tailwind CSS**
-- [Position](https://tailwindcss.com/docs/position#absolutely-positioning-elements) 
-- [Ring-width](https://tailwindcss.com/docs/ring-width)
-- [Ring-color](https://tailwindcss.com/docs/ring-color)
-- [Ring-offset-color](https://tailwindcss.com/docs/ring-offset-color)
-- [text-overflow](https://tailwindcss.com/docs/text-overflow)
-**Theme**
-- [Color](https://monkeytype.com/)
-theme : JOKER
+ - **tailwind CSS**
+> - [Position](https://tailwindcss.com/docs/position#absolutely-positioning-elements) <br>
+> - [Ring-width](https://tailwindcss.com/docs/ring-width)<br>
+> - [Ring-color](https://tailwindcss.com/docs/ring-color)<br>
+> - [Ring-offset-color](https://tailwindcss.com/docs/ring-offset-color)<br>
+> - [text-overflow](https://tailwindcss.com/docs/text-overflow)<br>
 
-![Screenshot 2023-02-22 221812](https://user-images.githubusercontent.com/88131673/220668253-0ae62dcf-09c1-43d3-9a31-a5e047ce9c00.png)
+- **Theme**
+> - [Color]([https://monkeytype.com/](https://monkeytype.com/settings#group_theme))= JOKER<br>
+![Screenshot 2023-02-22 221812](https://user-images.githubusercontent.com/88131673/220668253-0ae62dcf-09c1-43d3-9a31-a5e047ce9c00.png)<br>
+
+>- **Code Color**<br>
 ![Screenshot 2023-02-22 222344](https://user-images.githubusercontent.com/88131673/220668523-5b414018-a0fd-48ad-9ecf-d008c7ffdea4.png)
 
 ## Member
