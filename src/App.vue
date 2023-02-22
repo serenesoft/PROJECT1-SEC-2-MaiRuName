@@ -1,0 +1,244 @@
+<script setup>
+import { ref } from 'vue';
+let current = ref('');
+let previousNumber = ref('');
+let operator = ref(null);
+let currentOperator = ref('');
+let operatorClicked = ref(false); 
+let equation = ref(''); // เอาไว้เก็บสมการ(ที่ขึ้นตัวๆเล็กด้านบนอะ)
+let clickedEqual = ref(false) // ถ้ากด = แล้วมันจะเปลี่ยนเป็น true | พอเป็น true แล้วจะไปดักไม่ให้กด = ซ้ำ | แล้วไปเซ็ตค่ากลับเป็น false เวลากดปุ่มตัวเลขที่function append
+// History
+let histories = ref([]) //ตัวเก็บสมการที่เพิ่งคำนวณ
+let result = ref('')
+let toggleHistory = ref(false)
+function clear() { // clear เลข
+  current.value = '';
+  equation.value = '';
+  result.value = '';
+}
+function sign() {
+  current.value = current.value.charAt(0) === "-" ? current.value.slice(1) : `-${current.value}`;
+}
+function dele() {
+  current.value = `${current.value.slice(0, -1)}`;
+}
+function append(number) {
+  clickedEqual = false;
+  if (operatorClicked) {
+    current.value = "";
+    operatorClicked = false;
+  }
+  current.value = `${current.value}${number}`;
+}
+function setPreviousNumber() {
+  previousNumber.value = current.value; // เปลี่ยนตัวเลขcurrent --> previous (ตัวเลขตัวแรก)  -->A<-- + B = X
+  operatorClicked = true; // เมื่อกดเครื่องหมายจะเปลี่ยนเป็น true แล้วไปเข้าเงื่อนไขใน function append
+}
+function setResultAfterClickOperan() {
+  result.value = `${current.value} ${currentOperator}`;
+}
+function dot() {
+  if (current.value.includes(".") || current.value === "") { // ดักไม่ให้กด'.'ซ้ำและกดตัวแรก
+    return;
+  } else {
+    append(".");
+  }
+}
+function divide() {
+  if (current.value === "") {  // ดักไม่ให้กดเครื่องหมายเป็นตัวแรก
+    return;
+  } else {
+    operator = (a, b) => a / b;
+    currentOperator = "÷";
+    setEquation();
+    setResultAfterClickOperan();
+    setPreviousNumber();
+  }
+}
+function multiply() {
+  if (current.value === "") {
+    return;
+  } else {
+    operator = (a, b) => a * b;
+    currentOperator = "x";
+    setEquation();
+    setResultAfterClickOperan();
+    setPreviousNumber();
+  }
+}
+function minus() {
+  if (current.value === "") {
+    return;
+  } else {
+    operator = (a, b) => a - b;
+    currentOperator = "-";
+    setEquation();
+    setResultAfterClickOperan();
+    setPreviousNumber();
+  }
+}
+function plus() {
+  if (current.value === "") {
+    return;
+  } else {
+    operator = (a, b) => a + b;
+    currentOperator = "+";
+    setEquation();
+    setResultAfterClickOperan();
+    setPreviousNumber();
+  }
+}
+function setEquation() {
+  equation.value = `${current.value} ${currentOperator}`; // แสดงสมการหลังจากที่กดเครื่องหมาย Ex. '3 +'
+}
+function equal() {
+  if (clickedEqual) { // ดักไม่ให้กด = ซ้ำ
+    return;
+  } else {
+    equation.value = `${previousNumber.value} ${currentOperator} ${current.value} = `; // แสดงสมการหลังจากที่กด '=' Ex. '3 + 5 ='
+    result.value = result.value + ' ' +current.value
+    current.value = operator(parseFloat(previousNumber.value), parseFloat(current.value)); 
+    result.value = result.value + ' = ' +current.value
+    histories.value.push(result.value)
+    previousNumber.value = null;
+    clickedEqual = true;
+  }
+}
+function clearHistory() {
+  histories.value = []
+}
+</script>
+ 
+<template>
+  
+<div class=" bg-[#14081f]  flex items-center justify-center h-screen max-sm select-none">
+  <div class="bg-purple-900 p-10 rounded-lg ">
+    <h1 class="text-5xl text-center pb-7 font-semibold text-white">Calculator</h1>
+    <div class="calculator text-3xl w-96 p-8">
+      <div class="display bg-slate-800  col-span-4 pl-2 rounded-lg mb-1 text-right pr-2 relative overflow-hidden">
+        <div class="text-gray-200 text-2xl ">
+          {{ equation }}
+        </div>
+        <div class="text-white text-5xl font-bold absolute bottom-1 right-2">
+          {{ current || 0 }}
+        </div>
+      </div>
+      <div @click="clear()" class="btn">C</div>
+      <div @click="sign()" class="btn">+/-</div>
+      <div @click="dele()" class="btn">←</div>
+      <div @click="divide()" class="btn operator">÷</div>
+      <div @click="append('7')" class="btn">7</div>
+      <div @click="append('8')" class="btn">8</div>
+      <div @click="append('9')" class="btn">9</div>
+      <div @click="multiply()" class="btn operator">x</div>
+      <div @click="append('4')" class="btn">4</div>
+      <div @click="append('5')" class="btn">5</div>
+      <div @click="append('6')" class="btn">6</div>
+      <div @click="minus()" class="btn operator">-</div>
+      <div @click="append('1')" class="btn">1</div>
+      <div @click="append('2')" class="btn">2</div>
+      <div @click="append('3')" class="btn">3</div>
+      <div @click="plus()" class="btn operator">+</div>
+      <div @click="append('0')" class="btn col-span-2">0</div>
+      <div @click="dot()" class="btn">.</div>
+      <div @click="equal()" class="btn operator">=</div>
+    </div>
+    <div @click="toggleHistory = !toggleHistory" 
+    class="historyBtn hover:ring-4 hover:ring-offset-2 ring-[#301652]">
+        <h1>HISTORY</h1>
+      </div>
+    </div>
+
+    <div v-show="toggleHistory" class="bg-purple-900 pt-8 px-10 ml-7 rounded-lg">
+      <h1 class="text-5xl text-center pb-7 font-semibold text-white">History</h1>
+      <div class="bg-gray-200 rounded-lg overflow-scroll w-96 h-96">
+        <ul class="text-lg pl-3  pt-2">
+            <li v-for="history in histories">{{ history }}</li>
+        </ul>
+      </div>
+      <div class="clearHistoryBtn hover:ring-4 hover:ring-offset-2 ring-[#99de1e]">
+        <h1 @click="clearHistory() ">Clear history</h1>
+      </div>
+    </div>
+
+  </div>
+</template>
+ 
+<style scoped>
+.calculator {
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+  grid-template-rows: repeat(6, 80px);
+  background-color: #14081f;
+  border-radius: 5%;
+  user-select: none;
+}
+.btn {
+  background-color: #462870;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: center;
+  margin: 3px;
+  padding: 14px;
+  color: white;
+}
+.display{
+  background-color: #301652;
+}
+.btn:hover {
+  transition-duration: 0.4s;
+  background-color:  #e2e8f0;                                                                
+  color: #341f50;
+}
+.btn:active {
+  transform: scale(1.1, 1.1);
+}
+.operator {
+  background-color: #99de1e;
+  color: #341f50;
+}
+.operator:hover {
+  background-color: #e2e8f0;
+  color: #341f50;
+}
+.historyBtn {
+  background-color: #301652;
+  border: 2px solid black;
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 25px;
+  padding: 14px;
+  user-select: none;
+}
+.historyBtn:hover {
+  transition-duration: 0.4s;
+  background-color: #e2e8f0;
+  color: #341f50;
+}
+.historyBtn:active{
+  transform: scale(1.1, 1.1);
+}
+.clearHistoryBtn{
+  background-color: #99de1e;
+  border: 2px solid black;
+  color: #341f50;
+  font-weight: bold;
+  border-radius: 10px;
+  text-align: center;
+  margin: 25px 30px;
+  padding: 5px;
+  user-select: none;
+}
+.clearHistoryBtn:hover{
+  transition-duration: 0.4s;
+  background-color: #e2e8f0;
+  color: #341f50;
+  border: 1px solid #99de1e;
+}
+.clearHistoryBtn:active{
+  transform: scale(1.1, 1.1);
+}
+</style>
