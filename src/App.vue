@@ -20,7 +20,9 @@ function clear() {
 }
 
 function sign() {
-  current.value = current.value.charAt(0) === "-" ? current.value.slice(1) : `-${current.value}`;
+  if(current.value > 0 || current.value < 0) { // ดักไม่ให้ 0 ติดลบ
+    current.value = current.value.charAt(0) === "-" ? current.value.slice(1) : `-${current.value}`;
+  }
 }
 
 function del() {
@@ -29,9 +31,12 @@ function del() {
 
 function append(number) {
   clickedEqual = false;
-  if (operatorClicked) {
+  if (operatorClicked || current.value === '0') {
     current.value = "";
     operatorClicked = false;
+  }
+  if(current.value.length > 10){ // ไม่ให้กดตัวเลขเกิน 10 ตัว
+    return current.value
   }
   current.value = `${current.value}${number}`;
 }
@@ -41,16 +46,18 @@ function setPreviousNumber() {
   operatorClicked = true; // เมื่อกดเครื่องหมายจะเปลี่ยนเป็น true แล้วไปเข้าเงื่อนไขใน function append
 }
 
-function setResultAfterClickOperan() {
-  result.value = `${current.value} ${currentOperator}`; // [History] ตั้งค่าสมการที่จะเก็บไว้ใน history เก็บไว้ในตัวแปล result Ex.'3 +'
-}
-
 function dot() {
   if (current.value.includes(".") || current.value === "") { // ดักไม่ให้กด'.'ซ้ำและกดตัวแรก
     return;
-  } else {
+  }else if(current.value === '0'){
+    append("0.");
+  }else {
     append(".");
   }
+}
+
+function setResultAfterClickOperan() {
+  result.value = `${current.value} ${currentOperator}`; // [History] ตั้งค่าสมการที่จะเก็บไว้ใน history เก็บไว้ในตัวแปล result Ex.'3 +'
 }
 
 function divide() {
@@ -108,7 +115,9 @@ function setEquation() {
 function equal() {
   if (clickedEqual) { // ดักไม่ให้กด = ซ้ำ
     return;
-  } else {
+  }else if(previousNumber.value === null){
+    return current.value
+  } 
     equation.value = `${previousNumber.value} ${currentOperator} ${current.value} = `; // [Equation] แสดงสมการหลังจากที่กด '=' Ex. '3 + 5 ='
     result.value = result.value + ' ' +current.value // [History] ก่อนจะคำนวณ เอาresultจากsetResultAfterClickOperan()มาใช้ต่อ จะได้ '3 + 5'
     current.value = operator(parseFloat(previousNumber.value), parseFloat(current.value));
@@ -118,9 +127,7 @@ function equal() {
     result.value = result.value + ' = ' +current.value // [History] หลังจากคำนวณ เอาresultอันก่อนหน้านี้มาใช้ต่อ จะได้ '3 + 5 = 8'
     histories.value.push(result.value) // [History] push result เข้าไปเก็บใน history
     previousNumber.value = null;
-    clickedEqual = true;
-    console.log(typeof(current)); 
-  }
+    clickedEqual = true; 
 }
 
 function clearHistory() {
@@ -130,7 +137,7 @@ function clearHistory() {
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-[#14081f]  items-center justify-center max-sm select-none">
+  <div class="flex min-h-screen bg-[#1a0e25]  items-center justify-center max-sm select-none">
     <div class="bg-purple-900 p-10 rounded-lg m-10">
       <h1 class="text-5xl text-center pb-7 font-semibold text-white">Calculator</h1>
       <div class="calculator bg-[#14081f] text-3xl w-96 p-8">
