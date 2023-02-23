@@ -61,25 +61,25 @@ Our calculator has memory functions that allow you to store and recall values an
 ## Member :pushpin:
 
 สมาชิกทุกคนแบ่งกันไป coding calculator ในเวอร์ชั่นของตนเองในตอนแรกแล้วนำมาเลือกส่วนที่ดีของแต่ละคนออกมาใช้
-- :construction_worker: 64130500081 [Sedtabodee Bonphitak](https://github.com/PanSedtabodee) 20%<br>
+- :construction_worker: 64130500081 [Sedtabodee Bonphitak](https://github.com/PanSedtabodee) [20%]<br>
 หน้าที่: ขึ้นโครงเครื่องคิดเลขเบื้องต้นให้เพื่อน ,debug
 >  แก้ปัญหา text overflow โดยการตัดทศนิยม
 
-- :construction_worker: 64130500083 [Saharat Kanuenghade](https://github.com/KenMuey) 20%<br>
+- :construction_worker: 64130500083 [Saharat Kanuenghade](https://github.com/KenMuey) [20%]<br>
 หน้าที่: create feature and debug จากโค้ดหลักของเพื่อน เช่น<br>
 > ไม่ให้กด 0 ซ้ำได้ในตอนเริ่มโปรแกรม<br>
 > ทำให้ 0 ไม่ติดลบ<br>
 > แก้ไข้การใช้งาน dot<br>
-> ไม่ให้สามารถกด = ได้ตั้งแต่เริ่มโปรแกรม
-> ทำให้ผลลัพธ์เป็น 0 เเล้วไม่สามารถกด 0 ซ้ำได้
+> ไม่ให้สามารถกด = ได้ตั้งแต่เริ่มโปรแกรม<br>
 
-- :construction_worker: 64130500098 [Natchanon Boonchu](https://github.com/NatchanonBoonchu) 20%<br>
+- :construction_worker: 64130500098 [Natchanon Boonchu](https://github.com/NatchanonBoonchu) [20%]<br>
 หน้าที่: เป็นที่ปรึกษาของเพื่อนๆในกลุ่ม เป็น main code ทำ functionแสดงสมการ, function เก็บHistory, ตกแต่ง tailwind CSS ,comment code อธิบาย และ Debugบางส่วน เช่น 
 > ไม่ให้กด "." เป็นตัวแรก และไม่ให้กด "." ซ้ำ<br>
 > ดักไม่ให้กดเครื่องหมายเป็นตัวแรก
 
-- :construction_worker: 64130500118 [Chanakarn Ninlawat](https://github.com/Saiparnn) 20%<br>
-หน้าที่: ลองเขียนฟังก์ชั่นในรูปแบบอื่นๆเพื่อให้สมาชิกลองนำมาใช้
-
-- :construction_worker: 64130500121 [Ramin Piyanuluk](https://github.com/Tiger4846) 20%<br>
-หน้าที่: ออกเเบบเเละหา function ,coding ของตัวเองขึ้น ,ตกแต่ง tailwind CSS ,ทำ README
+- :construction_worker: 64130500118 [Chanakarn Ninlawat](https://github.com/Saiparnn) [20%]<br>
+หน้าที่: ลองเขียนฟังก์ชั่นในรูปแบบอื่นๆเพื่อให้สมาชิกลองนำมาใช้ เเละ debuh
+> ทำให้ผลลัพธ์เป็น 0 เเล้วไม่สามารถกด 0 ซ้ำได้<br>
+>
+- :construction_worker: 64130500121 [Ramin Piyanuluk](https://github.com/Tiger4846) [20%]<br>
+หน้าที่: ออกเเบบเเละหา function ,coding ของตัวเองขึ้น ,ตกแต่ง tailwind CSS เเละทำ README
