@@ -71,15 +71,15 @@ Our calculator has memory functions that allow you to store and recall values an
 > ทำให้ 0 ไม่ติดลบ<br>
 > แก้ไข้การใช้งาน dot<br>
 > ไม่ให้สามารถกด = ได้ตั้งแต่เริ่มโปรแกรม
-> ทำให้ผลลัพธ์เป็น 0 เเล้วไม่สามารถกด 0 ซ้ำได้
 
 - :construction_worker: 64130500098 [Natchanon Boonchu](https://github.com/NatchanonBoonchu) 20%<br>
 หน้าที่: เป็นที่ปรึกษาของเพื่อนๆในกลุ่ม เป็น main code ทำ functionแสดงสมการ, function เก็บHistory, ตกแต่ง tailwind CSS ,comment code อธิบาย และ debugบางส่วน เช่น 
-> ไม่ให้กด "." เป็นตัวแรก และไม่ให้กด "." ซ้ำ<br>
+> ไม่ให้กด "." เป็นตัวแรก และไม่ให้กด "." ซ้ำ <br>
 > ดักไม่ให้กดเครื่องหมายเป็นตัวแรก
 
 - :construction_worker: 64130500118 [Chanakarn Ninlawat](https://github.com/Saiparnn) 20%<br>
-หน้าที่: ลองเขียนฟังก์ชั่นในรูปแบบอื่นๆเพื่อให้สมาชิกลองนำมาใช้
+หน้าที่: ลองเขียนฟังก์ชั่นในรูปแบบอื่นๆเพื่อให้สมาชิกลองนำมาใช้ <br>
+> ทำให้ผลลัพธ์เป็น 0 เเล้วไม่สามารถกด 0 ซ้ำได้
 
 - :construction_worker: 64130500121 [Ramin Piyanuluk](https://github.com/Tiger4846) 20%<br>
-หน้าที่: ออกเเบบเเละหา function ,coding ของตัวเองขึ้น ,ตกแต่ง tailwind CSS ,ทำ README
+หน้าที่: ออกเเบบเเละหา function ,coding functionของตัวเอง ,ตกแต่ง tailwind CSS ,ทำ README
