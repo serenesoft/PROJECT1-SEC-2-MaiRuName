@@ -3,7 +3,7 @@
 
 **This is a web about calculating numbers**
 
-## Features
+## Features :pushpin:
 
 - **C** : clear all and start a new operation
 - **+/-** : change the sign of the displayed value from positive to negative
@@ -15,24 +15,24 @@
 - **=** : execute calculation
 - **History** : Keep and show history that we have calculated.
 
-## How to use 
-- Operator<br>
+## How to use :pushpin:
+- Operator : ใช้งานสัญลักษณ์ทางคณิตศาสตร์<br>
 ![operatorgif](https://user-images.githubusercontent.com/88131673/220914456-7e3d3d6c-aac4-4f7e-8d00-7fe8dedafafc.gif)
 
-- Backspace<br>
+- Backspace : ใช้งานเพื่อลบตัวหลังสุด<br>
 ![backspacegif](https://user-images.githubusercontent.com/88131673/220914485-a7a8839b-2c90-4751-b9cf-4d5590236ea6.gif)
 
-- Sign<br>
+- Sign : ใช้ในการเปลี่ยนค่าของข้อมูลจาก positive เป็น negative หรือกลับกัน<br>
 ![signgif](https://user-images.githubusercontent.com/88131673/220914522-160d8547-9478-40bf-9f19-4ee7a3ae0f51.gif)
 
-- History<br>
-![historygif](https://user-images.githubusercontent.com/88131673/220914533-83ee6ece-9465-4f41-9e39-13c65e4cc958.gif)
+- History :กดปุ่มHistory เพื่อแสดงหน้าต่างที่เก็บประวัติการใช้งาน<br>
+![history2gif](https://user-images.githubusercontent.com/88131673/220918223-e934a040-781f-4b5b-a368-a0c145d0aee0.gif)
 
 
-## References
+## References :pushpin:
 - [Calculator structure](https://www.youtube.com/watch?v=m1_ih43p24s )
 - [History](https://www.youtube.com/watch?v=IM1RzqlX2JA)
- - **tailwind CSS**
+ - [**tailwind CSS**](https://tailwindcss.com/)
 > - [Position](https://tailwindcss.com/docs/position#absolutely-positioning-elements) <br>
 > - [Ring-width](https://tailwindcss.com/docs/ring-width)<br>
 > - [Ring-color](https://tailwindcss.com/docs/ring-color)<br>
@@ -46,7 +46,7 @@
 >- **Code Color**<br>
 ![Screenshot 2023-02-22 222344](https://user-images.githubusercontent.com/88131673/220668523-5b414018-a0fd-48ad-9ecf-d008c7ffdea4.png)
 
-## Member
+## Member :pushpin:
 
 สมาชิกทุกคนแบ่งกันไป coding calculator ในเวอร์ชั่นของตนเองในตอนแรกแล้วนำมาเลือกส่วนที่ดีของแต่ละคนออกมาใช้
 - :construction_worker: 64130500081 [Sedtabodee Bonphitak](https://github.com/PanSedtabodee) 20%<br>
