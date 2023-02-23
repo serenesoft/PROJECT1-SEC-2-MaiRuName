@@ -115,9 +115,9 @@ function setEquation() {
 function equal() {
   if (clickedEqual) { // ดักไม่ให้กด = ซ้ำ
     return;
-  }else if(previousNumber.value === null){
+  }else if(previousNumber.value === '' || previousNumber.value === null){ // ดักไม่ให้กด = ก่อนเครื่องหมาย
     return current.value
-  } 
+  }else {
     equation.value = `${previousNumber.value} ${currentOperator} ${current.value} = `; // [Equation] แสดงสมการหลังจากที่กด '=' Ex. '3 + 5 ='
     result.value = result.value + ' ' +current.value // [History] ก่อนจะคำนวณ เอาresultจากsetResultAfterClickOperan()มาใช้ต่อ จะได้ '3 + 5'
     current.value = operator(parseFloat(previousNumber.value), parseFloat(current.value));
@@ -128,6 +128,7 @@ function equal() {
     histories.value.push(result.value) // [History] push result เข้าไปเก็บใน history
     previousNumber.value = null;
     clickedEqual = true; 
+  }
 }
 
 function clearHistory() {
