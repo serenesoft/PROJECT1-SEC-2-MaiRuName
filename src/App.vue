@@ -215,6 +215,7 @@ function clearHistory() {
   color: #341f50;
   transition-duration: 0.4s;
   background-color: #e2e8f0;
+  cursor: pointer;
 }
 .btn:active {
   transform: scale(1.2, 1.2);
