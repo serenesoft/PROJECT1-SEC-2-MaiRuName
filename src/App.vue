@@ -20,24 +20,28 @@
       equation.value = '';
     }
     function sign() {
-      if(parseFloat(current.value) > 0){ // ไม่ให้ 0 ติดลบ
-        current.value = current.value.charAt(0) === '-'?  current.value.slice(1) : `-${current.value}`;
+      if(current.value > 0 || current.value < 0){ // ถ้ามีค่าที่ไม่ใช่ 0 เป็นเครื่องหมายได้
+      current.value = current.value.charAt(0) === '-'?  current.value.slice(1) : `-${current.value}`;
+      }
     }
-  }
     function del() {
       current.value =  current.value.slice(0, -1);
     }
     function append(number) {
       clickEqual = false
       // แสดง ตัวเลข
-      if (operatorClicked || current.value === '0' ) { // ไม่ให้กด 0 ซ้ำได้
-         current.value = "";
-         operatorClicked = false;
+      
+      if (operatorClicked || current.value === '0') { // ไม่ให้กด 0 ซ้ำได้
+        current.value = "";
+        operatorClicked = false; // เอาออกกดตัวซ้ำไม่ได้
       }
       if(current.value.length > 10){ // ไม่ให้กดตัวเลขเกิน 10 ตัว
         return current.value
       }
-       current.value = `${current.value}${number}`;
+      if(current.value === 0){
+        return current.value 
+      }
+       current.value = `${current.value}${number}`; // ถ้า operatorClicked = false ให้เปลี่ยนค่าเป็นค่าใหม่
     }
   
     function dot() {
@@ -65,7 +69,7 @@
       if (current.value === "") {  
     return;
       }
-       operator = (a, b) => b / a;
+       operator = (a, b) => a / b;
        currentOperator = "÷";
        setEquation();
        setPrevious();
@@ -102,16 +106,22 @@
        setResultAfterClickOperator()
     }
     function equal() {
+      
       if (clickEqual) { // ดักไม่ให้กด = ซ้ำ
       return ;
-      }else if(previousNumber.value.length !== 0){ // ถ้า previous ไม่มีค่าจะไม่ทำอันนี้ ดักไม่ให้กด = ก่อนกดเครื่องหมาย
+      }
+      else if(previousNumber.value === '' || previousNumber.value === null){ // ดักไม่ให้กด = ก่อนกดเครื่องหมาย โดยให้เช็คค่า previous ให้เป็นค่าว่าง และ null return ค่าปัจจุบัน
+        return current.value
+      }
+      
+      else { 
        equation.value = `${ previousNumber.value}${ currentOperator}${ current.value} =`;
        result.value = result.value + ' ' +current.value
        current.value = operator(parseFloat(previousNumber.value), parseFloat(current.value));
           if(!Number.isInteger(current.value)){ // ถ้าcurrent ไม่ใช่จำนวนเต็ม ให้แปลงเป็นFloat ก่อน แล้วค่อยtoFixed() ตำแหน่งทศนิยม
             current.value = parseFloat(current.value).toFixed(5)
       }
-    
+      
     }
     result.value = result.value + ' = ' +current.value  // [History] หลังจากคำนวณ เอาresultอันก่อนหน้านี้มาใช้ต่อ จะได้ '3 + 5 = 8'
     histories.value.push(result.value) // [History] push result เข้าไปเก็บใน history
@@ -130,10 +140,11 @@
       <div class="calculator text-3xl w-96 p-8">
         <div class="display bg-slate-800 col-span-4 pl-2 rounded-lg mb-1 text-right pr-2 relative overflow-hidden">
           <div class="text-gray-200 text-2xl">
-            {{ equation }}
+            {{ equation.toLocaleString() }}
           </div>
           <div class="currentDisplay text-white text-5xl font-bold absolute bottom-1 right-2">
-            {{ current || 0 }}
+            {{ current.toLocaleString() || 0 }} 
+            <!--   // ถ้าไม่มีค่าให้แสดง 0 -->
           </div>
         </div>
         <div @click="clear()" class="btn">C</div>
