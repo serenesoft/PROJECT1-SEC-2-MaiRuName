@@ -16,6 +16,18 @@
 - **History** : Keep and show history that we have calculated.
 
 ## How to use :pushpin:
+**Basic Operations:**
+Our calculator has basic functions of a calculator are addition, subtraction, multiplication, and division. For example, if you want to add 1 and 2, press the following keys: 1 + 2 = (results displayed). Similarly, for subtraction, multiplication, and division.
+<br><br>
+**Order of Operations:**
+A calculator follows the order of operations, which means that it performs calculations in a specific order. The order of operations is as follows: parentheses first, then exponents, then multiplication and division (from left to right), and finally addition and subtraction (from left to right). For example, to solve the expression 3 + 5 x 2, you would first multiply 5 x 2 and then add the result to 3.
+
+**Decimal and Negative Numbers:**
+To input a decimal number, press the "." key. For example, to input the number 3.14, press 3 . 1 4 = (results displayed). To input a negative number, press the "-" key before the number. For example, to input the number -5, press -5 = (results displayed).
+<br><br>
+**History Functions:**
+Our calculator has memory functions that allow you to store and recall values and also has clear function.
+
 - Operator : ใช้งานสัญลักษณ์ทางคณิตศาสตร์<br>
 ![operatorgif](https://user-images.githubusercontent.com/88131673/220914456-7e3d3d6c-aac4-4f7e-8d00-7fe8dedafafc.gif)
 
