@@ -78,7 +78,7 @@ Our calculator has memory functions that allow you to store and recall values an
 > ดักไม่ให้กดเครื่องหมายเป็นตัวแรก
 
 - :construction_worker: 64130500118 [Chanakarn Ninlawat](https://github.com/Saiparnn) [20%]<br>
-หน้าที่: ลองเขียนฟังก์ชั่นในรูปแบบอื่นๆเพื่อให้สมาชิกลองนำมาใช้ เเละ debuh
+หน้าที่: ลองเขียนฟังก์ชั่นในรูปแบบอื่นๆเพื่อให้สมาชิกลองนำมาใช้ และ debug
 > ทำให้ผลลัพธ์เป็น 0 เเล้วไม่สามารถกด 0 ซ้ำได้<br>
 >
 - :construction_worker: 64130500121 [Ramin Piyanuluk](https://github.com/Tiger4846) [20%]<br>
