@@ -6,12 +6,12 @@ let operator = ref(null);
 let currentOperator = ref('');
 let operatorClicked = ref(false);
 let equation = ref(''); // เอาไว้เก็บสมการ(ที่ขึ้นตัวๆเล็กด้านบน)
-let clickedEqual = ref(false) // ถ้ากด = แล้วมันจะเปลี่ยนเป็น true | พอเป็น true แล้วจะไปดักไม่ให้กด = ซ้ำ | แล้วไปเซ็ตค่ากลับเป็น false เวลากดปุ่มตัวเลขที่function append
+let clickedEqual = ref(false) // ถ้ากด = แล้วมันจะเปลี่ยนเป็น true | พอเป็น true แล้วจะไปดักไม่ให้กด = ซ้ำ | แล้วไปเซ็ตค่ากลับเป็น false เวลากดปุ่มตัวเลขที่ function append
 
 // History
 let histories = ref([])
 let result = ref('')
-// ปุ่มtoggle history
+// ปุ่ม toggle history
 let toggleHistory = ref(false)
 
 function clear() {
@@ -31,18 +31,21 @@ function del() {
 
 function append(number) {
   clickedEqual = false;
-  if (operatorClicked || current.value === '0') { // ไม่ให้กด 0 ซ้ำได้
+  if (operatorClicked || current.value === 0) { // ไม่ให้กด 0 ซ้ำได้
     current.value = "";
     operatorClicked = false;
   }
   if(current.value.length > 10) { // ไม่ให้กดตัวเลขเกิน 10 ตัว
     return current.value
   }
+  if (current.value === 0) {
+    return current.value = number
+  }
   current.value = `${current.value}${number}`;
 }
 
 function setPreviousNumber() {
-  previousNumber.value = current.value; // เปลี่ยนตัวเลขcurrent --> previous (ตัวเลขตัวแรก)  -->A<-- + B = X
+  previousNumber.value = current.value; // เปลี่ยนตัวเลข current --> previous (ตัวเลขตัวแรก)  -->A<-- + B = X
   operatorClicked = true; // เมื่อกดเครื่องหมายจะเปลี่ยนเป็น true แล้วไปเข้าเงื่อนไขใน function append
 }
 
@@ -120,13 +123,13 @@ function equal() {
     return current.value;
   } else {
     equation.value = `${previousNumber.value} ${currentOperator} ${current.value} = `; // [Equation] แสดงสมการหลังจากที่กด '=' Ex. '3 + 5 ='
-    result.value = result.value + ' ' +current.value // [History] ก่อนจะคำนวณ เอาresultจากsetResultAfterClickOperan()มาใช้ต่อ จะได้ '3 + 5'
+    result.value = result.value + ' ' +current.value // [History] ก่อนจะคำนวณ เอา result จาก setResultAfterClickOperan()มาใช้ต่อ จะได้ '3 + 5'
     current.value = operator(parseFloat(previousNumber.value), parseFloat(current.value));
-    if(!Number.isInteger(current.value)) { // ถ้าcurrent ไม่ใช่จำนวนเต็ม ให้แปลงเป็นFloat ก่อน แล้วค่อยtoFixed() ตำแหน่งทศนิยม
+    if(!Number.isInteger(current.value)) { // ถ้า current ไม่ใช่จำนวนเต็ม ให้แปลงเป็นFloat ก่อน แล้วค่อยtoFixed() ตำแหน่งทศนิยม
       current.value = parseFloat(current.value).toFixed(5)
     }
   }
-    result.value = result.value + ' = ' +current.value // [History] หลังจากคำนวณ เอาresultอันก่อนหน้านี้มาใช้ต่อ จะได้ '3 + 5 = 8'
+    result.value = result.value + ' = ' +current.value // [History] หลังจากคำนวณ เอา result อันก่อนหน้านี้มาใช้ต่อ จะได้ '3 + 5 = 8'
     histories.value.push(result.value) // [History] push result เข้าไปเก็บใน history
     previousNumber.value = null;
     clickedEqual = true;
