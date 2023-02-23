@@ -35,8 +35,11 @@ function append(number) {
     current.value = "";
     operatorClicked = false;
   }
-  if(current.value.length > 10){ // ไม่ให้กดตัวเลขเกิน 10 ตัว
+  if(current.value.length > 10){ // ไม่ให้กดตัวเลขเกิน 11 ตัว
     return current.value
+  }
+  if(current.value === 0) {
+    return current.value = number
   }
   current.value = `${current.value}${number}`;
 }
@@ -138,7 +141,7 @@ function clearHistory() {
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-[#1a0e25] items-center justify-center max-[1000px]:flex-col  select-none">
+  <div class="flex min-h-screen bg-[#1a0e25]  items-center justify-center max-sm select-none">
     <div class="bg-purple-900 p-10 rounded-lg m-10">
       <h1 class="text-5xl text-center pb-7 font-semibold text-white">Calculator</h1>
       <div class="calculator bg-[#14081f] text-3xl w-96 p-8">
@@ -175,7 +178,7 @@ function clearHistory() {
       </div>
     </div>
 
-    <div v-show="toggleHistory" class="bg-purple-900 pt-8 px-10 ml-7 rounded-lg max-[1000px]:mb-10 max-[1000px]:ml-0">
+    <div v-show="toggleHistory" class="bg-purple-900 pt-8 px-10 ml-7 rounded-lg">
       <h1 class="text-5xl text-center pb-7 font-semibold text-white">History</h1>
       <div class="bg-gray-200 rounded-lg overflow-y-auto w-96 h-96">
         <ul class="text-lg pl-3 pt-2">
