@@ -82,4 +82,4 @@ Our calculator has memory functions that allow you to store and recall values an
 > ทำให้ผลลัพธ์เป็น 0 เเล้วไม่สามารถกด 0 ซ้ำได้<br>
 >
 - :construction_worker: 64130500121 [Ramin Piyanuluk](https://github.com/Tiger4846) [20%]<br>
-หน้าที่: ออกเเบบเเละหา function ,coding ของตัวเองขึ้น ,ตกแต่ง tailwind CSS เเละทำ README
+หน้าที่: ออกเเบบเเละหา function ,coding function ของตัวเองขึ้น ,ตกแต่ง tailwind CSS เเละทำ README
