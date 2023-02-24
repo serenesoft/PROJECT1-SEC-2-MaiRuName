@@ -20,13 +20,27 @@ function clear() {
 }
 
 function sign() {
-  if(parseFloat(current.value) > '0' || parseFloat(current.value) < '0') { // ไม่ให้ 0 ติดลบ
+  if(parseFloat(current.value) > 0 || parseFloat(current.value) < 0) { // ไม่ให้ 0 ติดลบ
     current.value = current.value.charAt(0) === '-'?  current.value.slice(1) : `-${current.value}`;
   }
 }
 
 function del() {
   current.value = `${current.value.slice(0, -1)}`;
+}
+
+function percent() {
+  if (current.value === "") {
+    return;
+  } else if (current.value == 0){ //ดักไม่ให้กดเมื่อมีค่าเป็น 0 และกดเปอร์เซ็นต์  //ที่ใช้ = สองตัวเพราะว่าต้องการให้เช็คว่ามีค่าเท่ากับ 0 ไหม โดยไม่เช็ค Type
+    current.value = 0;
+  } else {
+    setPreviousNumber();
+    current.value = parseFloat(current.value/100).toFixed(5)
+    currentOperator = "%";
+    setEquationPercent();
+    setResultAfterClickPercent();
+  }
 }
 
 function append(number) {
@@ -53,6 +67,12 @@ function setResultAfterClickOperan() {
   result.value = `${current.value} ${currentOperator}`; // [History] ตั้งค่าสมการที่จะเก็บไว้ใน history เก็บไว้ในตัวแปร result Ex.'3 +'
 }
 
+function setResultAfterClickPercent() {
+  result.value = `${previousNumber.value} ${currentOperator}`;
+  result.value = result.value + ' ' + '=' + ' ' + current.value
+  histories.value.push(result.value);
+}
+
 function dot() {
   if (current.value.includes(".") || current.value === "") { // ดักไม่ให้กด'.'ซ้ำและกดตัวแรก
     return;
@@ -65,6 +85,10 @@ function dot() {
 
 function setEquation() {
   equation.value = `${current.value} ${currentOperator}`; // [Equation] แสดงสมการหลังจากที่กดเครื่องหมาย Ex. '3 +'
+}
+
+function setEquationPercent(){
+  equation.value = `${previousNumber.value} ${currentOperator} = `
 }
 
 // operator
@@ -171,7 +195,8 @@ function clearHistory() {
         <div @click="append('2')" class="btn">2</div>
         <div @click="append('3')" class="btn">3</div>
         <div @click="plus()" class="btn operator">+</div>
-        <div @click="append('0')" class="btn col-span-2">0</div>
+        <div @click="append('0')" class="btn">0</div>
+        <div @click="percent()" class="btn">%</div>
         <div @click="dot()" class="btn">.</div>
         <div @click="equal()" class="btn operator">=</div>
       </div>
