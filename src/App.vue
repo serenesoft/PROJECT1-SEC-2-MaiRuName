@@ -126,6 +126,7 @@ function percent() {
     setPreviousNumber();
     current.value = parseFloat(current.value/100).toFixed(5)
     currentOperator = "%";
+    clickedEqual = true
     setEquationPercent();
     setResultAfterClickPercent();
   }
