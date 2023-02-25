@@ -63,6 +63,12 @@ function setResultAfterClickOperan() {
   result.value = `${current.value} ${currentOperator}`; // [History] ตั้งค่าสมการที่จะเก็บไว้ใน history เก็บไว้ในตัวแปล result Ex.'3 +'
 }
 
+function setResultAfterClickPercent() { // [History] เก็บ History ของ %
+  result.value = `${previousNumber.value} ${currentOperator}`; 
+  result.value = result.value + ' = ' + current.value
+  histories.value.push(result.value);
+}
+
 function divide() {
   if (current.value === "") {  // ดักไม่ให้กดเครื่องหมายเป็นตัวแรก
     return;
@@ -111,8 +117,27 @@ function plus() {
   }
 }
 
+function percent() {
+  if (current.value === "") {
+    return;
+  } else if (current.value == 0){ //ดักไม่ให้กดเมื่อมีค่าเป็น 0 และกดเปอร์เซ็นต์  //ที่ใช้ = สองตัวเพราะว่าต้องการให้เช็คว่ามีค่าเท่ากับ 0 ไหม โดยไม่เช็ค Type
+    current.value = 0;
+  } else {
+    setPreviousNumber();
+    current.value = parseFloat(current.value/100)
+    currentOperator = "%";
+    clickedEqual = true
+    setEquationPercent();
+    setResultAfterClickPercent();
+  }
+}
+
 function setEquation() {
   equation.value = `${current.value} ${currentOperator}`; // [Equation] แสดงสมการหลังจากที่กดเครื่องหมาย Ex. '3 +'
+}
+
+function setEquationPercent(){
+  equation.value = `${previousNumber.value} ${currentOperator} = ` // [Equation] แสดงสมการหลังจากที่กดเครื่องหมาย %
 }
 
 function equal() {
@@ -169,12 +194,14 @@ function clearHistory() {
         <div @click="append('2')" class="btn">2</div>
         <div @click="append('3')" class="btn">3</div>
         <div @click="plus()" class="btn operator">+</div>
-        <div @click="append('0')" class="btn col-span-2">0</div>
+        <div @click="append('0')" class="btn">0</div>
         <div @click="dot()" class="btn">.</div>
+        <div @click="percent()" class="btn operator">%</div>
         <div @click="equal()" class="btn operator">=</div>
       </div>
       <div @click="toggleHistory = !toggleHistory" class="historyBtn hover:ring-4 hover:ring-offset-2 ring-[#14081f]">
         <h1>HISTORY</h1>
+
       </div>
     </div>
 
